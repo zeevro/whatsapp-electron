@@ -3,3 +3,8 @@ linux:
     - target: AppImage
   icon: './assets/512x512.png'
   category: 'Network'
+
+win:
+  target:
+    - target: portable
+  icon: './assets/512x512.png'
