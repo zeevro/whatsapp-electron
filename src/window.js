@@ -8,7 +8,7 @@ function loadWhatsApp() {
     width: 1024,
     height: 768,
     icon: path.join(__dirname, '../assets/512x512.png'),
-    webPreferences: { 
+    webPreferences: {
       // devTools: false,
       preload: path.join(__dirname, 'preload.js')
     },
@@ -16,7 +16,7 @@ function loadWhatsApp() {
 
   window.setMenuBarVisibility(false);
 
-  window.on('close', (event) => { 
+  window.on('close', (event) => {
     event.preventDefault();
     window.hide();
   });
@@ -31,4 +31,12 @@ function loadWhatsApp() {
   return window;
 }
 
-module.exports = { loadWhatsApp };
+function showWindow(window) {
+  if (window.isVisible()) {
+    window.focus();
+  } else {
+    window.show();
+  }
+}
+
+module.exports = { loadWhatsApp, showWindow };

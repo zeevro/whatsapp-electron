@@ -1,17 +1,12 @@
 const { Tray, Menu, MenuItem } = require('electron');
 const path = require('path');
+const { showWindow } = require('./window')
 
 function createTrayIconFor(window, app) {
   const tray = new Tray(path.join(__dirname, '../assets/512x512.png'));
 
   const showWindowMenuItem = new MenuItem({
-    label: 'Show Window', click: () => {
-      if (window.isVisible()) {
-        window.focus();
-      } else {
-        window.show();
-      }
-    }
+    label: 'Show Window', click: () => showWindow(window)
   });
 
   const quitAppMenuItem = new MenuItem({
@@ -29,6 +24,8 @@ function createTrayIconFor(window, app) {
   ]);
 
   tray.setContextMenu(contextMenu);
+
+  tray.on('double-click', () => showWindow(window));
 
   return tray
 }
