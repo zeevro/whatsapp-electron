@@ -1,6 +1,6 @@
-const { app, globalShortcut } = require('electron')
-const { loadWhatsApp, showWindow } = require('./src/window');
-const { createTrayIconFor } = require('./src/tray');
+const { app, globalShortcut } = require('electron');
+const { loadWhatsApp, showWindow, setWindowUnreadCount } = require('./src/window');
+const { createTrayIconFor, setTrayUnreadCount } = require('./src/tray');
 const { clearServiceWorkers } = require('./src/session');
 
 let window;
@@ -10,7 +10,6 @@ const isFirstInstance = app.requestSingleInstanceLock();
 
 if (!isFirstInstance) {
   app.quit();
-  return;
 }
 
 app.on('second-instance', () => {
@@ -19,13 +18,27 @@ app.on('second-instance', () => {
   }
 });
 
-const startApp = () => {
+app.on('ready', () => {
   window = loadWhatsApp();
-  tray = createTrayIconFor(window, app);
+  tray = createTrayIconFor(window);
   globalShortcut.register('Super+CommandOrControl+W', () => showWindow(window));
-}
+});
 
-app.on('ready', startApp);
-app.on('before-quit', clearServiceWorkers);
-app.on('will-quit', globalShortcut.unregisterAll);
-app.on('window-all-closed', () => app.quit());
+app.on('before-quit', () => {
+  clearServiceWorkers();
+  globalShortcut.unregisterAll();
+});
+
+// function setUnreadMsgCount(count) {
+//   if (tray !== undefined) {
+//     setTrayUnreadCount(tray, count);
+//   }
+//   setWindowUnreadCount(window, count);
+// }
+
+// function newFavIcon(url) {
+//   if (tray !== undefined) {
+//     tray.icon
+//   }
+//   window.icon
+// }

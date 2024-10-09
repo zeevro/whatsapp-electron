@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder ."
+    "build": "electron-builder"
   },
   "repository": "https://github.com/kenxjy/whatsapp-electron",
   "author": "Kenneth Yue",
   "license": "LGPL-3.0",
   "devDependencies": {
-    "electron": "^6.0.4",
-    "electron-builder": "^21.2.0"
+    "electron": ">=19.0.0",
+    "electron-builder": ">=23.1.0"
   }
 }
